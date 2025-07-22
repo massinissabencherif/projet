@@ -1,49 +1,62 @@
-# Mamazon
 
-## Consignes générales
+---
 
-Vous devez refactoriser l'application console PHP fournie en appliquant les design patterns et principes SOLID vus en cours.
-L'application est un système de gestion de commandes e-commerce fonctionnel mais mal conçu. Vous devez l'améliorer en 4 étapes progressives de refactorisation.
+## ⚙️ Fonctionnement global
 
-> Important : L'application doit rester fonctionnelle à chaque étape !
+Le fichier `index.php` charge une liste de commandes à traiter.
 
-## Étapes de refactorisation
+Chaque commande passe par plusieurs étapes :
 
-### Étape 1 : Chain of Responsibility pour la validation (5 points)
+### 1. 🔍 Validation (Chain of Responsibility)
+Tous les validateurs héritent d’`AbstractValidator` et sont chaînés. Si un maillon échoue, la validation s’arrête :
+- Email valide
+- Présence des articles
+- Adresse de livraison
+- Méthode de paiement reconnue
+- Méthode de livraison
+- Remise valide (optionnelle)
 
-Refactorisez en utilisant le pattern Chain of Responsibility pour créer une chaîne de validateurs.
+### 2. 💰 Calcul du total
+Le total est calculé en fonction des produits (prix x quantité).
 
-### Étape 2 : Strategy pour les paiements (5 points)
+### 3. 🎫 Remises
+Si un code promo est valide (`WELCOME10`, `STUDENT20`), le total est réduit.
 
-Refactorisez en utilisant le pattern Strategy pour les méthodes de paiement.
+### 4. 💳 Paiement (Strategy + Factory)
+Le `PaymentStrategyFactory` retourne l’objet correspondant à la méthode de paiement :
+- `credit_card` → `CreditCardPayment`
+- `paypal` → `PayPalPayment`
+- `bank_transfer` → `BankTransferPayment`
 
-### Étape 3 : Factory Method pour les livraisons (5 points)
+Chacune applique sa propre logique via `PaymentStrategyInterface`.
 
-Refactorisez en utilisant le pattern Factory Method pour la création des services de livraison.
+### 5. 📦 Livraison
+En fonction de `shipping_method`, on simule une livraison :
+- `express`, `standard` ou `pickup`
 
-### Étape 4 : Observer pour les notifications (5 points)
+### 6. 📧 Notifications (Observer)
+Un `OrderNotifier` notifie tous les `Observer` attachés :
+- Email
+- SMS
+- Notification push
 
-Refactorisez en utilisant le pattern Observer pour découpler les notifications.
+### 7. 💾 Sauvegarde
+Simulation d’un enregistrement de la commande traitée.
 
-## Critères d'évaluation
+---
 
-### Fonctionnalité (5 points)
+## 🧠 Design Patterns utilisés
 
-L'application console fonctionne correctement après chaque étape
-La sortie console reste cohérente et lisible.
-Aucune régression fonctionnelle
+| Pattern                    | Utilisation                                         |
+|---------------------------|-----------------------------------------------------|
+| Chain of Responsibility   | Pour valider dynamiquement les champs d'une commande |
+| Strategy                  | Pour encapsuler chaque mode de paiement             |
+| Factory Method            | Pour instancier dynamiquement la stratégie de paiement |
+| Observer                  | Pour notifier plusieurs canaux (email, sms...)      |
 
-### Respect des Design Patterns (10 points)
+---
 
-- Chain of Responsibility : correctement implémenté (2,5 pts)
-- Strategy : correctement implémenté (2,5 pts)
-- Factory Method : correctement implémenté (2,5 pts)
-- Observer : correctement implémenté (2,5 pts)
+## ▶️ Lancer le projet
 
-### Principes SOLID (5 points)
-
-- SRP : chaque classe a une responsabilité unique
-- OCP : ouvert à l'extension, fermé à la modification
-- DIP : dépendance aux abstractions, pas aux concrétions
-- DRY : pas de duplication de code
-Lisibilité : code clair et bien structuré
+```bash
+php index.php
