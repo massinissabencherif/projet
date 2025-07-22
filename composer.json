@@ -1,0 +1,15 @@
+{
+    "name": "jeffbisous/mamazon",
+    "autoload": {
+        "psr-4": {
+            "JeffBisous\\Mamazon\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Eliot Demots",
+            "email": "eliot@demots.fr"
+        }
+    ],
+    "require": {}
+}
