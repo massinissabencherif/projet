@@ -18,7 +18,12 @@ $orders = [
             ['name' => 'Mouse', 'price' => 29.99, 'quantity' => 2]
         ],
         'payment_method' => 'credit_card',
-        'shipping_method' => 'express',
+        'shipping_address' => '123 rue de Paris, 75001 Paris',
+        'delivery' => [
+            'type' => 'express',
+            'carrier' => 'Chronopost',
+            'price' => 9.99
+        ],
         'discount_code' => 'WELCOME10'
     ],
     [
@@ -29,7 +34,12 @@ $orders = [
             ['name' => 'Keyboard', 'price' => 79.99, 'quantity' => 1]
         ],
         'payment_method' => 'paypal',
-        'shipping_method' => 'standard',
+        'shipping_address' => '42 avenue de Lyon, 69000 Lyon',
+        'delivery' => [
+            'type' => 'standard',
+            'carrier' => 'Colissimo',
+            'price' => 5.99
+        ],
         'discount_code' => ''
     ],
     [
@@ -41,7 +51,11 @@ $orders = [
             ['name' => 'Cable HDMI', 'price' => 19.99, 'quantity' => 3]
         ],
         'payment_method' => 'bank_transfer',
-        'shipping_method' => 'pickup',
+        'shipping_address' => '87 boulevard Haussmann, 75008 Paris',
+        'delivery' => [
+            'type' => 'pickup',
+            'store_address' => 'Magasin Fnac République'
+        ],
         'discount_code' => 'STUDENT20'
     ]
 ];
